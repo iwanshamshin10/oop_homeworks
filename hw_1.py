@@ -7,11 +7,22 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
 
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_attached = []
+
+
+class Lecturer(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
+
+
+class Reviewer(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
 
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
@@ -22,14 +33,6 @@ class Mentor:
         else:
             return 'Ошибка'
 
-class Lecturer(Mentor):
-    def __init__(self, name, surname):
-        super().__init__(name, surname)
-
-class Reviewer(Mentor):
-    def __init__(self, name, surname):
-        super().__init__(name, surname)
-
 
 lecturer = Lecturer('Иван', 'Иванов')
 reviewer = Reviewer('Пётр', 'Петров')
@@ -37,3 +40,7 @@ print(isinstance(lecturer, Mentor))  # True
 print(isinstance(reviewer, Mentor))  # True
 print(lecturer.courses_attached)  # []
 print(reviewer.courses_attached)  # []
+
+
+print(hasattr(lecturer, 'rate_hw'))  # False. Проверка, что у lecturer нет метода rate_hw
+print(hasattr(reviewer, 'rate_hw'))  # True. Проверка, что у reviewer присутствует метод rate_hw
